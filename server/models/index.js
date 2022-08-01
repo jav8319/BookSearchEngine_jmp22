@@ -1,5 +1,7 @@
 const User = require('./User');
-const bookSchemaok = require('./Book');
+const Book = require('./Book');
 
 
-module.exports = { User, Book};
+
+module.exports = { User}
+module.exports = { Book}

@@ -1,5 +1,6 @@
-const { Schema, Types, model } = require('mongoose');
+const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+
 
 // import schema from Book.js
 const userSchema = new Schema(
@@ -20,7 +21,20 @@ const userSchema = new Schema(
       required: true,
     },
 
-    savedBooks:[bookSchema],
+    savedBooks:[
+      
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'book',
+      },
+    ],
+  },
+  {
+
+    toJSON: {
+      virtuals: true,
+    },
+    id: false,
   }
   // set this to use virtual below
   // {
@@ -30,32 +44,6 @@ const userSchema = new Schema(
   // }
 );
 
-const bookSchema = new Schema({
-  authors: [
-    {
-      type: String,
-    },
-  ],
-  description: {
-    type: String,
-    required: true,
-  },
-  // saved book id from GoogleBooks
-  bookId: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-  },
-  link: {
-    type: String,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-});
 
 // hash user password
 userSchema.pre('save', async function (next) {
